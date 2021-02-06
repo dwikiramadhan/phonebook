@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
 
 import PhonebookForm from '../containers/PhonebookForm';
-import PhonebookSearch from '../containers/PhonebookSearch';
+// import PhonebookSearch from '../containers/PhonebookSearch';
 import PhonebookList from '../containers/PhonebookList';
 
 export default class PhonebookBox extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            searchName: '',
-            searchPhone: ''
-        }
-    }
+    // constructor(props) {
+    //     super(props)
+    //     this.state = {
+    //         searchName: '',
+    //         searchPhone: ''
+    //     }
+    // }
 
-    onSearchName = (event) => {
-        this.setState({
-            searchName: event.target.value
-        })
-    }
+    // onSearchName = (event) => {
+    //     this.setState({
+    //         searchName: event.target.value
+    //     })
+    // }
 
-    onSearchPhone = (event) => {
-        this.setState({
-            searchPhone: event.target.value
-        })
-    }
+    // onSearchPhone = (event) => {
+    //     this.setState({
+    //         searchPhone: event.target.value
+    //     })
+    // }
 
     render() {
         return (
@@ -32,16 +32,7 @@ export default class PhonebookBox extends Component {
                     <h1 className="text-center">Phone Book Apps</h1>
                 </div>
                 <PhonebookForm />
-                <PhonebookSearch
-                    onSearchName={this.onSearchName}
-                    onSearchPhone={this.onSearchPhone}
-                    searchName={this.state.searchName}
-                    searchPhone={this.state.searchPhone}
-                />
-                <PhonebookList
-                    searchName={this.state.searchName}
-                    searchPhone={this.state.searchPhone}
-                />
+                <PhonebookList/>
             </div>
         )
     }

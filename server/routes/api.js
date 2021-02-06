@@ -1,66 +1,73 @@
 var express = require('express');
 var router = express.Router();
+var firebase = require("firebase");
 
-var Phonebooks = require('../models/phonebooks')
-
-router.post('/checkdata', function (req, res, next) {
-    var { phone } = req.body;
-
-    Phonebooks.exists({ phone }, (err, data) => {
-        res.status(200).json(data)
-    })
-
+//Fetch instances
+router.get('/phonebooks', function (req, res) {
+    const userReference = firebase.database().ref("/Phonebook/");
+    //Attach an asynchronous callback to read the data
+    userReference.on("value", function (snapshot) {
+        console.log(snapshot.val());
+        res.json(snapshot.val());
+        userReference.off("value");
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+        res.send("The read failed: " + errorObject.code);
+    });
 });
 
 router.post('/phonebooks', function (req, res, next) {
     var { id, name, phone } = req.body;
+    let _id = Date.now();
 
-    Phonebooks.create({ id, name, phone }, (err, data) => {
-        res.status(201).json({
-            success: true,
-            message: "data have been added",
-            data: data
-        })
-    })
-
-});
-
-router.get('/phonebooks', function (req, res, next) {
-    Phonebooks.find(
-        {})
-        // .limit(3)
-        // .sort({ 'id': -1 })
-        .exec(function (err, data) {
-            res.status(200).json({
-                data
+    const referencePath = '/Phonebook/' + _id + '/';
+    const userReference = firebase.database().ref(referencePath);
+    userReference.set({ ID: id, Name: name, Phone: phone }, function (error) {
+        if (error) {
+            res.send("Data could not be saved." + error);
+        } else {
+            res.status(201).json({
+                status: "SUCCESS",
+                data: {
+                    id, name, phone
+                }
             })
-        })
-
-})
+        }
+    })
+});
 
 router.put('/phonebooks/:id', function (req, res, next) {
     var _id = req.params.id
     var { name, phone } = req.body
-    Phonebooks.findByIdAndUpdate(_id, { name, phone }, { new: true }, (err, data) => {
-        res.status(201).json({
-            success: true,
-            message: "data have been updated",
-            data: data
-        })
-    })
+
+    var referencePath = '/Phonebook/' + _id + '/';
+    var userReference = firebase.database().ref(referencePath);
+    userReference.update({ Name: name, Phone: phone }, function (error) {
+        if (error) {
+            res.send("Data could not be updated." + error);
+        } else {
+            res.status(201).json({
+                status: "SUCCESS",
+                data: {
+                    name, phone
+                }
+            });
+        }
+    });
 
 })
 
 router.delete('/phonebooks/:id', function (req, res, next) {
     var _id = req.params.id
-    Phonebooks.findByIdAndRemove(_id, (err, data) => {
-        res.status(201).json({
-            success: true,
-            message: "data have been deleted",
-            data: data
-        })
+    var referencePath = '/Phonebook/' + _id + '/';
+    var userReference = firebase.database().ref(referencePath);
+    userReference.remove((error) => {
+        if (error) {
+            res.send("Data could not be deleted." + error);
+        } else {
+            res.send("Data deleted successfully.");
+        }
     })
-
 })
 
 module.exports = router;

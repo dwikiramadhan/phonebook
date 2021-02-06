@@ -9,9 +9,9 @@ export const addDataFailure = (id) => ({
     id
 })
 
-export const addDataView = (id, name, phone) => ({
+export const addDataView = (id, name, phone, count) => ({
     type: 'ADD_DATA',
-    id, name, phone
+    id, name, phone, count
 })
 export const addDataExists = (phone) => ({
     type: 'ADD_DATA_EXISTS',
@@ -27,15 +27,17 @@ export const addData = (name, phone) => ({
 //load data 
 export const loadDataSuccess = (data) => ({
     type: 'LOAD_DATA_SUCCESS',
-    data
+    items: data.items,
+    count: data.count
 })
 
 export const loadDataFailure = () => ({
     type: 'LOAD_DATA_FAILURE'
 })
 
-export const loadData = () => ({
-    type: 'LOAD_DATA'
+export const loadData = (curpage, limit, searchName, searchPhone) => ({
+    type: 'LOAD_DATA',
+    curpage, limit, searchName, searchPhone
 })
 //end load data
 
@@ -70,9 +72,9 @@ export const updateDataFailure = (id) => ({
     id
 })
 
-export const updateDataView = (id, name, phone) => ({
+export const updateDataView = (id, name, phone, count) => ({
     type: 'UPDATE_DATA',
-    id, name, phone
+    id, name, phone, count
 })
 
 export const updateData = (id, name, phone) => ({

@@ -52,11 +52,13 @@ class PhonebookItem extends Component {
         }).then((result) => {
             if (result.isConfirmed) {
                 this.props.deleteData(this.props.id)
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted!',
+                    text: 'Your file has been deleted.',
+                }).then(function() {
+                    // history.push('/')
+                })
             }
         })
 
@@ -83,8 +85,8 @@ class PhonebookItem extends Component {
             return (
                 <tr className={this.props.sent ? "" : "bg-danger text-white"}>
                     <th scope="row">{this.props.no}</th>
-                    <td>{this.state.name}</td>
-                    <td>{this.state.phone}</td>
+                    <td>{this.props.name}</td>
+                    <td>{this.props.phone}</td>
                     <td>
                         <button onClick={this.editBtnClicked} className={this.props.sent ? "btn btn-success mr-2" : "d-none"}><i className="fa fa-edit"></i> edit </button>
                         <button onClick={ this.props.sent ? this.handleDelete : this.handleResend} className={this.props.sent ? 'btn btn-danger' : 'btn btn-warning'}><i className={this.props.sent ? "fa fa-trash" : "fa fa-refresh"}></i> { this.props.sent ? 'delete' : 'Resend' }</button>

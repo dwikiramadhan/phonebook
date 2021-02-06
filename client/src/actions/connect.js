@@ -1,9 +1,9 @@
-import axios from 'axios';
+import ApolloClient from 'apollo-boost';
 
-const request = axios.create({
-    baseURL: 'http://localhost:3000/',
-    timeout: 10000,
-    headers: { "X-Custom-Header": "foobar" }
+const API_URL = 'http://localhost:3001/graphql/'
+
+const client = new ApolloClient({
+    uri: API_URL
 });
 
-export default request;
+export default client;

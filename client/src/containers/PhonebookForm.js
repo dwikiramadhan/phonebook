@@ -22,6 +22,7 @@ class PhonebookForm extends Component {
             [name]: value,
         })
     }
+    
     handleClickAdd() {
         this.setState({
             isVisibleAdd: 'card mb-3'
