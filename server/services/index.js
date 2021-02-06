@@ -25,10 +25,10 @@ const getContacts = (offset, limit, searchName, searchPhone) => {
                         item.phone === searchPhone
                     )
                 }
-
-                const dataFilter = dataTest.splice(offset - 1, limit)
+                const dataRend = dataTest.reverse()
+                const dataFilter = dataRend.splice(offset - 1, limit)
                 console.log('dataFiltered', dataFilter)
-                console.log('dataTest', dataTest)
+                console.log('dataTest', dataRend)
                 resolve(dataFilter);
             }
             userReference.off("value");

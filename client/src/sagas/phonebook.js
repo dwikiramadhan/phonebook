@@ -122,8 +122,8 @@ function* postData(payload) {
     const { name, phone } = payload;
     const id = Date.now();
     try {
-        yield put(actions.addDataView(id, name, phone));
         const data = yield call(add, { id, name, phone })
+        yield put(actions.addDataView(id, name, phone));
         yield put(actions.addDataSuccess(data))
     } catch (error) {
         yield put(actions.addDataView(id, name, phone));

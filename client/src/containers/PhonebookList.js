@@ -16,7 +16,6 @@ class PhonebookList extends Component {
 
     componentDidMount() {
         this.props.loadData(this.state.currentPage, this.state.limit, this.state.searchName, this.state.searchPhone);
-        // console.log('logLoadData', this.props.loadData())
     }
 
     onSearchName = (event) => {
@@ -56,7 +55,7 @@ class PhonebookList extends Component {
     handleSelectPage = (event) => {
         const page = event.target.getAttribute('data');
         this.setState({
-            currentPage: page
+            currentPage: Number(page)
         })
         this.props.loadData(page, this.state.limit, this.state.searchName, this.state.searchPhone);
         event.preventDefault();
@@ -65,12 +64,11 @@ class PhonebookList extends Component {
     render() {
 
         let dataFiltered = this.props.data.items;
-
         const dataNode = dataFiltered.map((item, index) =>
             <PhonebookItem
                 key={index}
                 id={item.id}
-                no={index + 1}
+                no={(this.state.currentPage - 1) * this.state.limit + (index+1)}
                 name={item.name}
                 phone={item.phone}
                 sent={item.sent}
