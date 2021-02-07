@@ -37,7 +37,8 @@ class PhonebookItem extends Component {
     }
 
     handleResend = () => {
-        this.props.resendData(this.props.id, this.state.name, this.state.phone)
+        console.log('cek', this.props.id + this.props.name + this.props.phone)
+        this.props.resendData(this.props.id, this.props.name, this.props.phone)
     }
 
     handleDelete = () => {

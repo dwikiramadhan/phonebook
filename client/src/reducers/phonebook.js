@@ -23,7 +23,7 @@ const phonebook = (state = { items: [], count: 0 }, action) => {
                     title: 'Contact has been Add!',
                     text: ''
                 }).then(function () {
-                    // history.push('/home')
+                    window.location = '/'
                 });
                 item.sent = true
                 return item
